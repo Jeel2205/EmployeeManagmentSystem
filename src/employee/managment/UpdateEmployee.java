@@ -1,0 +1,220 @@
+package employee.managment;
+
+import com.toedter.calendar.JDateChooser;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+
+public class UpdateEmployee extends JFrame implements ActionListener {
+
+    JTextField tfeducation,tfname,eaddress,ephone,eaadhar,eemail,esalary,edesignation;
+
+    JLabel tempid;
+    JButton add,back;
+
+    String number;
+
+    UpdateEmployee(String number) {
+
+        this.number=number;
+
+        getContentPane().setBackground(new Color(163,255,188));
+
+        JLabel heading = new JLabel("Add Employee");
+        heading.setBounds(320,30,500,50);
+        heading.setFont(new Font("Times New Roman", Font.BOLD, 25));
+        add(heading);
+
+        //Name
+        JLabel name= new JLabel("Name");
+        name.setBounds(50,150,150,30);
+        name.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        add(name);
+        JLabel  tname= new JLabel();
+        tname.setBounds(200,150,150,30);
+        tname.setBackground(new Color(177,252,197));
+        add(tname);
+
+        //Father Name
+        JLabel fatherName= new JLabel("Father Name");
+        fatherName.setBounds(400,150,150,30);
+        fatherName.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        add(fatherName);
+        tfname = new JTextField();
+        tname.setBounds(600,150,150,30);
+        tname.setBackground(new Color(177,252,197));
+        add(tname);
+
+        //Date of Birth
+        JLabel dob= new JLabel("Date of Birth");
+        dob.setBounds(50,200,150,30);
+        dob.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        add(dob);
+        JLabel tdob= new JLabel();
+        tdob.setBounds(50,20,150,30);
+        tdob.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        add(tdob);
+
+        //Salary
+        JLabel salary= new JLabel("Salary");
+        salary.setBounds(400,200,150,30);
+        salary.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        add(salary);
+        esalary = new JTextField();
+        esalary.setBounds(600,200,150,30);
+        esalary.setBackground(new Color(177,252,197));
+        add(esalary);
+
+
+        //Address
+        JLabel address= new JLabel("Address");
+        address.setBounds(50,250,150,30);
+        address.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        add(address);
+        eaddress = new JTextField();
+        eaddress.setBounds(200,250,150,30);
+        eaddress.setBackground(new Color(177,252,197));
+        add(eaddress);
+
+        //phone
+        JLabel phone= new JLabel("Phone ");
+        phone.setBounds(400,250,150,30);
+        phone.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        add(phone);
+        ephone = new JTextField();
+        ephone.setBounds(600,250,150,30);
+        ephone.setBackground(new Color(177,252,197));
+        add(ephone);
+
+        //Email
+        JLabel Email= new JLabel("Email Id ");
+        Email.setBounds(50,300,150,30);
+        Email.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        add(Email);
+        eemail = new JTextField();
+        eemail.setBounds(200,300,150,30);
+        eemail.setBackground(new Color(177,252,197));
+        add(eemail);
+
+        //eduction
+        JLabel education= new JLabel("Higest Education ");
+        education.setBounds(400,300,150,30);
+        education.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        add(education);
+        tfeducation = new JTextField();
+        tfeducation.setBounds(600,300,150,30);
+        tfeducation.setBackground(new Color(177,252,197));
+        add(tfeducation);
+
+
+        //aadhr
+        JLabel aadhar= new JLabel("Aadhar Number ");
+        aadhar.setBounds(400,350,150,30);
+        aadhar.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        add(aadhar);
+        JLabel eaadhar= new JLabel();
+        eaadhar.setBounds(600,350,150,30);
+        eaadhar.setBackground(new Color(177,252,197));
+        add(eaadhar);
+
+        //empid
+        JLabel empid= new JLabel("Employee Id ");
+        empid.setBounds(50,400,150,30);
+        empid.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        add(empid);
+        tempid= new JLabel();
+        tempid.setBounds(200,400,150,30);
+        tempid.setFont(new Font("SAN_SARIF", Font.BOLD, 20));
+        tempid.setForeground(Color.red);
+        add(tempid);
+
+        //designation
+        JLabel designation= new JLabel("Designation");
+        designation.setBounds(50,350,150,30);
+        designation.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        add(designation);
+        edesignation= new JTextField();
+        edesignation.setBounds(200,350,150,30);
+        edesignation.setBackground(new Color(177,252,197));
+        add(edesignation);
+
+        try{
+            conn c=new conn();
+            String query ="Select * from employee where empId='"+number+"'";
+            ResultSet resultSet=c.stmt.executeQuery(query);
+            while (resultSet.next()){
+                tname.setText(resultSet.getString("name"));
+                tfname.setText(resultSet.getString("father"));
+                tdob.setText(resultSet.getString("dob"));
+                esalary.setText(resultSet.getString("salary"));
+                eaddress.setText(resultSet.getString("address"));
+                eaadhar.setText(resultSet.getString("addhar"));
+                ephone.setText(resultSet.getString("phone"));
+                eemail.setText(resultSet.getString("email"));
+                education.setText(resultSet.getString("education"));
+                edesignation.setText(resultSet.getString("designation"));
+                empid.setText(resultSet.getString("empId"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //add
+        add = new JButton("Update");
+        add.setBounds(450,550,150,40);
+        add.setBackground(Color.black);
+        add.setForeground(Color.WHITE);
+        add.addActionListener(this);
+        add(add);
+
+        //back
+        back = new JButton("Back");
+        back.setBounds(250,550,150,40);
+        back.setBackground(Color.black);
+        back.setForeground(Color.WHITE);
+        back.addActionListener(this);
+        add(back);
+
+
+
+        setSize(900,700);
+        setLayout(null);
+        setLocation(300,50);
+        setVisible(true);
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource()==add){
+            String fatherName=tfname.getText();
+            String salary=esalary.getText();
+            String address=eaddress.getText();
+            String email=eemail.getText();
+            String education=edesignation.getText();
+            String designation=edesignation.getText();
+            String phone=ephone.getText();
+
+            try{
+                conn c=new conn();
+                String query ="update employee set fname='"+tfname+"',salary='"+salary+"',address='"+address+"',email='"+email+"',phone='"+phone+"',education='"+education+"',designation='"+designation+"' where empId='"+number+"'";
+                c.stmt.executeUpdate(query);
+                JOptionPane.showMessageDialog(null,"Employee Updated Successfully");
+                setVisible(false);
+                new Main_class();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }else{
+            setVisible(false);
+            new ViewEmployee();
+        }
+    }
+
+    public static void main(String[] args) {
+        new UpdateEmployee(" ");
+    }
+}
